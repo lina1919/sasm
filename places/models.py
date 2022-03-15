@@ -35,7 +35,7 @@ class Place(core_models.TimeStampedModel):
     name = models.CharField(max_length=140)
     description = models.TextField()
     address = models.CharField(max_length=140)
-    place_type = models.ManyToManyField("PlaceType", blank = True)
+    place_type = models.ManyToManyField("PlaceType", related_name = 'place', blank = True)
 
     def __str__(self):
         return self.name

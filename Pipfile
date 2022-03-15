@@ -9,6 +9,7 @@ pillow = "*"
 djangorestframework = "*"
 django-rest-knox = "*"
 django-cors-headers = "*"
+django-debug-toolbar = "*"
 
 [dev-packages]
 

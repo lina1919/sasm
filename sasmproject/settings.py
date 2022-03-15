@@ -25,14 +25,12 @@ SECRET_KEY = 'django-insecure-f45=x^bapsz5k-2q3r0oe4^28lf-+%p0m5zbpfww8mz5p92c9%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','localhost']
 
-
+CORS_ORIGIN_WHITELIST = ["http://localhost:3000"]
 # Application definition
 
 DJANGO_APPS = [
-    'restframework',
-    'knox',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,12 +42,21 @@ PROJECT_APPS = [
     "users.apps.UsersConfig",
     "places.apps.PlacesConfig",
     "stories.apps.StoriesConfig",
+    "core.apps.CoreConfig",
 ]
-INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
+THIRD_APPS = [
+    'rest_framework',
+    'knox',
+    'debug_toolbar',
+    'corsheaders',
+]
+INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_APPS
 
 AUTH_USER_MODEL = "users.User"
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -125,9 +132,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
+MEDIA_URL = "/media/"
+MEDA_ROOT = os.path.join(BASE_DIR, "media")
 
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated",]
+}
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
